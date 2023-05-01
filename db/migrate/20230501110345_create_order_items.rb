@@ -3,7 +3,6 @@ class CreateOrderItems < ActiveRecord::Migration[7.0]
     create_table :order_items do |t|
       t.integer :quantity
       t.decimal :price
-      t.references :category, null: false, foreign_key: true
       t.references :item, null: false, foreign_key: true
       t.references :order, null: false, foreign_key: true
 
