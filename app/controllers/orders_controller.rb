@@ -11,6 +11,15 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new(order_create_params)
+    items = @order.items
+    items.each do |item|
+      OrderItem.create({
+        order_id: @order.id,
+        quantity: item.quantity,
+        price: item.price,
+        item_id: item.id,
+      })
+    end
     if @order.save
       render json: {
         message: "Order created successfully",
@@ -48,7 +57,7 @@ class OrdersController < ApplicationController
   private
 
   def order_create_params
-    params.require(:order).permit(:order_status, :payment_status, :shipping_address, :billing_address, :shipping_method, :tracking_number, :total_price, :note)
+    params.require(:order).permit(:order_status, :payment_status, :shipping_address, :billing_address, :shipping_method, :tracking_number, :total_price, :note, :items)
   end
 
   def order_update_params
