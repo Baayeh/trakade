@@ -17,7 +17,8 @@ class OrdersController < ApplicationController
       }, status: :created
     else
       render json: {
-               error: @order.errors_full_messages, error: "Something went wrong",
+               error_message: "Oops! Order creation failed",
+               errors: @order.errors_full_messages,
              }, status: :unprocessable_entity
     end
   end
@@ -25,11 +26,13 @@ class OrdersController < ApplicationController
   def update
     @order = Order.find(params[:id])
     if order.update(order_update_params)
-      render json: { message: "Order updated successfully" }, status: :ok
+      render json: {
+               message: "Order updated successfully",
+             }, status: :ok
     else
       render json: {
-               error: "Something went wrong",
-               error: "Sorry! Could not update order, Please try again later",
+               error_message: "Sorry! Could not update order, Please try again later",
+               errors: @order.errors_full_messages,
              }, status: :unprocessable
     end
   end

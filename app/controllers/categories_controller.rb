@@ -19,7 +19,8 @@ class CategoriesController < ApplicationController
       }, status: :created
     else
       render json: {
-               error: @category.errors_full_messages, error: "Something went wrong",
+               error_message: "Something went wrong",
+               errors: @category.errors_full_messages,
              }, status: :unprocessable_entity
     end
   end
@@ -32,7 +33,8 @@ class CategoriesController < ApplicationController
       }, status: :ok
     else
       render json: {
-        errors: @category.errors_full_messages, error: "Something went wrong",
+        error_message: "Something went wrong",
+        errors: @category.errors_full_messages,
       }, status: :unprocessable_entity
     end
   end
